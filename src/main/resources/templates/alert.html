@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 필요</title>
+  <script>
+    function showAlert() {
+      alert("로그인이 필요합니다.");
+    }
+
+    function handleButtonClick(event) {
+      const isLoggedIn = false;
+      if (!isLoggedIn) {
+        event.preventDefault();
+        showAlert();
+        setTimeout(function() {
+          window.location.href = '/user/login';
+        }, 500);
+      }
+    }
+  </script>
+</head>
+<body onload="handleButtonClick(event)">
+</body>
+</html>

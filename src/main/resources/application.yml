@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: StGuideBook
+  datasource:
+    url: jdbc:mysql://localhost:3306/ToolsProject
+    username: localmaster
+    password: ChoiDoHyun
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

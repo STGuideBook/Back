@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.springframework.org/tags/security">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST Guide Book</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <div class="nav-bar">
+        <div class="nav-btns">
+            <a>먹거리</a>
+            <a>학업</a>
+            <a href="living.html">주거</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/question/list}" class="btn btn-primary">팁게시판</a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/question/none}" class="btn btn-primary">팁게시판</a>
+        </div>
+        <div class="nav-logo">
+            <a href="main.html"><img src="/imgMain/로고.png"></a>
+        </div>
+        <div class="nav-login">
+            <a sec:authorize="isAuthenticated()" href="/user/logout">로그아웃</a>
+            <a sec:authorize="!isAuthenticated()" href="/user/login">로그인</a>
+            <img class="login-icon" src="/imgMain/로그인아이콘.png">
+        </div>
+    </div>
+</nav>
+
+
+<section class="main-first-section">
+    <a class="welcome">Welcome To<br>SeoulTech!</a>
+</section>
+
+<section class="main-second-section">
+    <h2>많이 찾는 정보</h2>
+    <div class="container">
+        <div class="btns">
+            <button type="button" class="btn1">
+                <div class="large">선배가<br>추천하는 맛집</div>
+                <div class="small">먹거리 ></div>
+            </button>
+            <button type="button" class="btn2">
+                <div class="large">기숙사,<br>어디가 좋을까?</div>
+                <div class="small">주거 ></div>
+            </button>
+            <button type="button" class="btn3">
+                <div class="large">나랑<br>Library 갈래?</div>
+                <div class="small">팁 게시판 ></div>
+            </button>
+            <button type="button" class="btn4">
+                <div class="large">수강신청<br>A부터 Z까지</div>
+                <div class="small">학업 ></div>
+            </button>
+            <button type="button" class="btn5">
+                <div class="large">과기대,<br>더 알고싶다면?</div>
+                <div class="small">팁 게시판 ></div>
+            </button>
+            <button type="button" class="btn6">
+                <div class="large">개강파티?<br>여기로 모여!</div>
+                <div class="small">먹거리 ></div>
+            </button>
+            <button type="button" class="btn7">
+                <div class="large">학생증 100%<br>활용하는 법</div>
+                <div class="small">팁 게시판 ></div>
+            </button>
+            <button type="button" class="btn8">
+                <div class="large">너만의<br>꿀팁을 알려줘!</div>
+                <div class="small">팁 게시판 글 작성하기 ></div>
+            </button>
+            <button type="button" class="btn1">
+                <div class="large">선배가<br>추천하는 맛집</div>
+                <div class="small">먹거리 ></div>
+            </button>
+            <button type="button" class="btn2">
+                <div class="large">기숙사,<br>어디가 좋을까?</div>
+                <div class="small">주거 ></div>
+            </button>
+            <button type="button" class="btn3">
+                <div class="large">나랑<br>Library 갈래?</div>
+                <div class="small">팁 게시판 ></div>
+            </button>
+            <button type="button" class="btn4">
+                <div class="large">수강신청<br>A부터 Z까지</div>
+                <div class="small">학업 ></div>
+            </button>
+            <button type="button" class="btn5">
+                <div class="large">과기대,<br>더 알고싶다면?</div>
+                <div class="small">팁 게시판 ></div>
+            </button>
+            <button type="button" class="btn6">
+                <div class="large">개강파티?<br>여기로 모여!</div>
+                <div class="small">먹거리 ></div>
+            </button>
+            <button type="button" class="btn7">
+                <div class="large">학생증 100%<br>활용하는 법</div>
+                <div class="small">팁 게시판 ></div>
+            </button>
+            <button type="button" class="btn8">
+                <div class="large">너만의<br>꿀팁을 알려줘!</div>
+                <div class="small">팁 게시판 글 작성하기 ></div>
+            </button>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="main-thrid-section">
+    <div class="for-who">
+        <h1>For Who?</h1>
+        <p>서울과학기술대학교 신입생 여러분, 환영합니다!<br>
+            이 웹사이트는 여러분이 대학 생활을 시작하면서 겪을 수 있는 어려움을<br>
+            덜어드리기 위해 제작되었습니다. 신입생 시절, 정보를 어디서 얻어야 할지<br>
+            몰라 답답했던 경험을 바탕으로 여러분이 대학 생활에 필요한 모든 정보를<br>
+            쉽게 찾고 활용할 수 있도록 도와드릴게요.</p>
+    </div>
+    <img src="for.png">
+</section>
+
+<section class="main-fourth-section">
+    <div class="caution">
+        <h1>Caution</h1>
+        <p>저희 웹사이트는 대학생활에 필요한 정확하고 유익한 정보를 제공하는 것을 최우선 목표로 하고 있습니다.<br>
+            따라서 모든 정보는 신중하게 검토되며, 잘못된 정보가 포함되지 않도록 최선을 다하고 있습니다.<br>
+            사이트 내의 모든 정보는 시간이 지나면서 변동될 수 있다는 점을 미리 숙지하여 주시기 바랍니다.<br>
+            최신 정보를 확인하지 않아 발생하는 모든 불이익은 이용자의 책임임을 양해해 주시기 바랍니다.<br>
+            사이트 내의 모든 정보는 단순 참고용으로 봐주시면 감사하겠습니다.<br>
+            사이트 오류 및 잘못된 정보에 대한 문의는 문의 게시판을 이용해주십시오.
+        </p>
+    </div>
+</section>
+
+<footer>
+
+</footer>
+
+</body>
+</html>
