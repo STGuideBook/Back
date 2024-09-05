@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(22)
 	}
 }
 
@@ -18,9 +18,6 @@ repositories {
 }
 
 dependencies {
-	// Thymeleaf
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	// Spring Web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -44,9 +41,12 @@ dependencies {
 	// Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	//Security
+	// Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	// log
+	implementation 'org.springframework.boot:spring-boot-starter-logging'  // Logback 포함
+
 }
 
 tasks.named('test') {

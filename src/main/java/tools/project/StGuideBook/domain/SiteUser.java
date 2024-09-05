@@ -2,6 +2,7 @@ package tools.project.StGuideBook.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import tools.project.StGuideBook.UserRole.UserRole;
 
 @Getter
 @Entity
@@ -17,6 +18,9 @@ public class SiteUser {
     private String password;
 
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     public SiteUser(String username, String email, String encode) {
         this.username = username;

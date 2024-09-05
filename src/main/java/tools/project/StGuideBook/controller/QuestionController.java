@@ -2,14 +2,13 @@ package tools.project.StGuideBook.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tools.project.StGuideBook.domain.Question;
 import tools.project.StGuideBook.domain.SiteUser;
-import tools.project.StGuideBook.form.AnswerForm;
 import tools.project.StGuideBook.form.QuestionForm;
 import tools.project.StGuideBook.service.QuestionService;
 import tools.project.StGuideBook.service.UserService;
@@ -19,45 +18,33 @@ import java.util.List;
 
 @RequestMapping("/question")
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class QuestionController {
 
     private final QuestionService questionService;
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public ResponseEntity<List<Question>> list() {
         List<Question> questionList = this.questionService.getList();
-        model.addAttribute("questionList", questionList);
-        return "question_list";
+        return ResponseEntity.ok(questionList);
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+    public ResponseEntity<Question> detail(@PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
-        model.addAttribute("question", question);
-        return "question_detail";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/create")
-    public String create(QuestionForm questionForm) {
-        return "question_form";
+        return ResponseEntity.ok(question);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String create(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
+    public ResponseEntity<?> create(@Valid @RequestBody QuestionForm questionForm,
+                                    BindingResult bindingResult, Principal principal) {
         if(bindingResult.hasErrors()) {
-            return "question_form";
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
-        return "redirect:/question/list";
-    }
-
-    @GetMapping("/none")
-    public String none() {
-        return "alert";
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
