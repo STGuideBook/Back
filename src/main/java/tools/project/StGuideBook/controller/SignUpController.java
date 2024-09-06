@@ -12,7 +12,7 @@ import tools.project.StGuideBook.service.UserService;
 
 @RequiredArgsConstructor
 @RestController
-public class UserController {
+public class SignUpController {
 
     private final UserService userService;
 

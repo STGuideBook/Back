@@ -27,10 +27,12 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults())
 
-                .logout((logout) -> logout
+                .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true));
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                );
 
         return http.build();
     }

@@ -2,10 +2,10 @@ package tools.project.StGuideBook.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tools.project.StGuideBook.domain.Question;
+import tools.project.StGuideBook.domain.TipPost;
 import tools.project.StGuideBook.domain.SiteUser;
 import tools.project.StGuideBook.exception.DataNotFoundException;
-import tools.project.StGuideBook.repository.QuestionRepository;
+import tools.project.StGuideBook.repository.TipPostRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,16 +13,16 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class QuestionService {
+public class TipPostService {
 
-    private final QuestionRepository questionRepository;
+    private final TipPostRepository tipPostRepository;
 
-    public List<Question> getList() {
-        return this.questionRepository.findAll();
+    public List<TipPost> getList() {
+        return this.tipPostRepository.findAll();
     }
 
-    public Question getQuestion(Integer id) {
-        Optional<Question> question = this.questionRepository.findById(id);
+    public TipPost getQuestion(Integer id) {
+        Optional<TipPost> question = this.tipPostRepository.findById(id);
         if(question.isPresent()) {
             return question.get();
         } else {
@@ -31,7 +31,7 @@ public class QuestionService {
     }
 
     public void create(String subject, String content, SiteUser user) {
-        Question question = new Question(subject, content, LocalDateTime.now(), user);
-        this.questionRepository.save(question);
+        TipPost tipPost = new TipPost(subject, content, LocalDateTime.now(), user);
+        this.tipPostRepository.save(tipPost);
     }
 }
