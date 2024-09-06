@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tools.project.StGuideBook.domain.Question;
 import tools.project.StGuideBook.domain.SiteUser;
-import tools.project.StGuideBook.form.AnswerForm;
+import tools.project.StGuideBook.dto.AnswerForm;
 import tools.project.StGuideBook.service.AnswerService;
 import tools.project.StGuideBook.service.QuestionService;
 import tools.project.StGuideBook.service.UserService;
@@ -16,7 +16,7 @@ import tools.project.StGuideBook.service.UserService;
 import java.security.Principal;
 import java.util.Map;
 
-@RequestMapping("/answer")
+@RequestMapping("/tip_board1")
 @RequiredArgsConstructor
 @RestController
 public class AnswerController {

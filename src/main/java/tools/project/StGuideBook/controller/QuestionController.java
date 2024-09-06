@@ -9,14 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tools.project.StGuideBook.domain.Question;
 import tools.project.StGuideBook.domain.SiteUser;
-import tools.project.StGuideBook.form.QuestionForm;
+import tools.project.StGuideBook.dto.QuestionForm;
 import tools.project.StGuideBook.service.QuestionService;
 import tools.project.StGuideBook.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
 
-@RequestMapping("/question")
+@RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
 public class QuestionController {

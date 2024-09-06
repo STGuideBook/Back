@@ -1,4 +1,4 @@
-package tools.project.StGuideBook.form;
+package tools.project.StGuideBook.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
