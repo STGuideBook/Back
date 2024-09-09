@@ -3,6 +3,7 @@ package tools.project.StGuideBook.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tools.project.StGuideBook.UserRole.UserRole;
 import tools.project.StGuideBook.domain.SiteUser;
 import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.repository.UserRepository;
@@ -17,7 +18,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public SiteUser create(String username, String email, String password) {
-        SiteUser user = new SiteUser(username, email, passwordEncoder.encode(password));
+        UserRole userRole = UserRole.USER;
+        SiteUser user = new SiteUser(username, email, passwordEncoder.encode(password), userRole);
         this.userRepository.save(user);
         return user;
     }

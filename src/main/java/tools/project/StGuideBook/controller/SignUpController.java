@@ -42,4 +42,6 @@ public class SignUpController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+
 }

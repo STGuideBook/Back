@@ -25,9 +25,12 @@ public class TipPostController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<TipPost>> list() {
+    public ResponseEntity<List<TipPostDTO>> list() {
         List<TipPost> tipPostList = this.tipPostService.getList();
-        return ResponseEntity.ok(tipPostList);
+        List<TipPostDTO> tipPostDTOList = tipPostList.stream()
+                .map(this.tipPostService::convertToDto)
+                .toList();
+        return ResponseEntity.ok(tipPostDTOList);
     }
 
     @GetMapping(value = "/detail/{id}")

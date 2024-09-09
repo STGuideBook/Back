@@ -27,4 +27,6 @@ public class TipPostDTO {
         this.createDate = createDate;
         this.commentList = commentList;
     }
+
+    public TipPostDTO() {}
 }

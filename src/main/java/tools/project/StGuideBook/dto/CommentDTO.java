@@ -14,4 +14,6 @@ public class CommentDTO {
     public CommentDTO(String content) {
         this.content = content;
     }
+
+    public CommentDTO() {}
 }
