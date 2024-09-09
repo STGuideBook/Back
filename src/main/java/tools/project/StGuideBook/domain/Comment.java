@@ -1,5 +1,6 @@
 package tools.project.StGuideBook.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -19,6 +20,7 @@ public class Comment {
     private LocalDateTime createDate;
 
     @ManyToOne
+    @JsonManagedReference
     private TipPost tipPost;
 
     @ManyToOne

@@ -1,5 +1,6 @@
 package tools.project.StGuideBook.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -24,6 +25,7 @@ public class TipPost {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "tipPost", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<Comment> commentList;
 
     @ManyToOne

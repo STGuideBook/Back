@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import tools.project.StGuideBook.dto.LoginRequest;
+import tools.project.StGuideBook.dto.LoginRequestDTO;
 import tools.project.StGuideBook.service.UserService;
 
 @RestController
@@ -21,9 +21,9 @@ public class LoginController {
 }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
-        boolean isAuthenticated = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+        boolean isAuthenticated = userService.authenticate(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 
         if(isAuthenticated) {
             return ResponseEntity.ok("로그인 성공.");

@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tools.project.StGuideBook.domain.TipPost;
 import tools.project.StGuideBook.domain.SiteUser;
-import tools.project.StGuideBook.dto.TipPostForm;
+import tools.project.StGuideBook.dto.TipPostDTO;
 import tools.project.StGuideBook.service.TipPostService;
 import tools.project.StGuideBook.service.UserService;
 
@@ -31,20 +31,21 @@ public class TipPostController {
     }
 
     @GetMapping(value = "/detail/{id}")
-    public ResponseEntity<TipPost> detail(@PathVariable("id") Integer id) {
+    public ResponseEntity<TipPostDTO> detail(@PathVariable("id") Integer id) {
         TipPost tipPost = this.tipPostService.getQuestion(id);
-        return ResponseEntity.ok(tipPost);
+        TipPostDTO tipPostDTO = this.tipPostService.convertToDto(tipPost);
+        return ResponseEntity.ok(tipPostDTO);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@Valid @RequestBody TipPostForm tipPostForm,
+    public ResponseEntity<?> create(@Valid @RequestBody TipPostDTO tipPostDTO,
                                     BindingResult bindingResult, Principal principal) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.tipPostService.create(tipPostForm.getSubject(), tipPostForm.getContent(), siteUser);
+        this.tipPostService.create(tipPostDTO.getSubject(), tipPostDTO.getContent(), siteUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

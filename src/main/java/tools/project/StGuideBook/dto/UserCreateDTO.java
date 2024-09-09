@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserCreateForm {
+public class UserCreateDTO {
 
     @Size(min = 3, max = 25)
     @NotEmpty(message = "사용자ID는 필수항목 입니다.")
