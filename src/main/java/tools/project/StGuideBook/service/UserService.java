@@ -8,6 +8,7 @@ import tools.project.StGuideBook.domain.SiteUser;
 import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -50,4 +51,24 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public List<SiteUser> getAllUser() {
+        return userRepository.findAll();
+    }
+
+    public boolean deleteUser(String username) {
+        Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
+        if(siteUser.isPresent()) {
+            userRepository.delete(siteUser.get());
+            return true;
+        }
+        return false;
+    }
+
+    public int getTotalUsers() {
+        return (int) userRepository.count();
+    }
+
+    public int getTotalAdmins() {
+        return userRepository.countByRole(UserRole.valueOf("ADMIN"));
+    }
 }
