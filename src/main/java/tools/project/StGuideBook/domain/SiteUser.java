@@ -30,4 +30,14 @@ public class SiteUser {
     }
 
     public SiteUser() {}
+
+    public void changeRoleToAdmin() {
+        this.role = UserRole.ADMIN;
+    }
+
+    public void changeRoleToUser() {
+        this.role = UserRole.USER;
+    }
+
+
 }

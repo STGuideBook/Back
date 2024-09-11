@@ -23,7 +23,9 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**/")).permitAll())
+                        .requestMatchers("/login", "/signup").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults())
 

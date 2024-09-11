@@ -24,15 +24,6 @@ public class UserService {
         return user;
     }
 
-//    public SiteUser getUser(String username) {
-//        Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
-//        if(siteUser.isPresent()) {
-//            return siteUser.get();
-//        } else {
-//            throw new DataNotFoundException("사용자를 찾을 수 없습니다.");
-//        }
-//    }
-
     public SiteUser getUser(String username) {
         Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
         return siteUser.orElseThrow(() -> new DataNotFoundException("User not found"));
@@ -41,6 +32,22 @@ public class UserService {
     public boolean authenticate(String username, String password) {
         SiteUser user = this.getUser(username);
         return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    public void grantAdminRole(String username) {
+        SiteUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new DataNotFoundException("유저를 찾지 못했습니다"));
+
+        user.changeRoleToAdmin();
+        userRepository.save(user);
+    }
+
+    public void grantUserRole(String username) {
+        SiteUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new DataNotFoundException("유저를 찾지 못했습니다"));
+
+        user.changeRoleToUser();
+        userRepository.save(user);
     }
 
 }
