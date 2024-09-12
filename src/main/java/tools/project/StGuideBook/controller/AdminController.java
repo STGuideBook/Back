@@ -64,7 +64,6 @@ public class AdminController {
         return ResponseEntity.ok(dashboardData);
     }
 
-
     @GetMapping("/user_list")
     public ResponseEntity<List<SiteUser>> getAllUsers() {
         List<SiteUser> user = userService.getAllUser();

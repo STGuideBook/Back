@@ -1,8 +1,12 @@
 package tools.project.StGuideBook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tools.project.StGuideBook.UserRole.UserRole;
 import tools.project.StGuideBook.domain.SiteUser;
 import tools.project.StGuideBook.exception.DataNotFoundException;
@@ -70,5 +74,16 @@ public class UserService {
 
     public int getTotalAdmins() {
         return userRepository.countByRole(UserRole.valueOf("ADMIN"));
+    }
+
+    public boolean verifyPassword(String username, String password) {
+        SiteUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    @Transactional
+    public void deleteUserByUsername(String username) {
+        userRepository.deleteByUsername(username); // 물리적 삭제이므로 북구 불가능.
     }
 }
