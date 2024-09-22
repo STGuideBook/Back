@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
-public class CommentController {
+public class CommentController { // 모든 팁게시판 기능에 대한 컨트롤러
 
     private final TipPostService tipPostService;
     private final CommentService commentService;

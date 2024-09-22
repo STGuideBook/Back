@@ -10,11 +10,12 @@ import tools.project.StGuideBook.service.UserService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController { // 모든 어드민 기능에 대한 컨트롤러
 
     private final UserService userService;
 
@@ -22,7 +23,7 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @PostMapping("/grant_admin")
+    @PostMapping("/grant_admin") // 기존 유저에게 어드민 권한 부여
     public ResponseEntity<String> grantAdmin(@RequestBody Map<String, String> requestBody) {
 
         String username = requestBody.get("username");
@@ -36,7 +37,7 @@ public class AdminController {
         return ResponseEntity.ok(username + "님에게 관리자 권한이 부여되었습니다.");
     }
 
-    @PostMapping("/grant_user")
+    @PostMapping("/grant_user") // 기존 어드민 유저로 변경
     public ResponseEntity<String> grantUser(@RequestBody Map<String, String> requestBody) {
 
         String username = requestBody.get("username");
@@ -50,27 +51,35 @@ public class AdminController {
         return ResponseEntity.ok(username + "님이 일반 유저로 권한이 변경되었습니다.");
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/dashboard") // 어드민 대시보드
     public ResponseEntity<Map<String, Object>> dashboard() {
+        // 대시보드에 전체 유저를 조회 가능한 페이지로 이동 가능해야함
         Map<String, Object> dashboardData = new HashMap<>();
 
         int totalUsers = userService.getTotalUsers();
         int totalAdmins = userService.getTotalAdmins();
 
-        dashboardData.put("message", "관리자 전용 대쉬보드. 유저 및 관리자 수 조회 가능");
+        dashboardData.put("message", "관리자 전용 대시보드. 유저 및 관리자 수 조회 가능");
         dashboardData.put("totalUsers", totalUsers);
         dashboardData.put("totalAdmins", totalAdmins);
 
         return ResponseEntity.ok(dashboardData);
     }
 
-    @GetMapping("/user_list")
+    @GetMapping("/user_list") // 유저 전체 조회
     public ResponseEntity<List<SiteUser>> getAllUsers() {
+        // 유저 전체 조회 기능에서 해당 유저를 클릭하면 유저에 대한 정보를 변경하는 페이지로 이동 가능해야함
         List<SiteUser> user = userService.getAllUser();
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping("/user_delete/{username}")
+    @GetMapping("/user_list/{username}") // 해당 유저만 조회
+    public ResponseEntity<Optional<SiteUser>> getUsersByUsername(@PathVariable(name = "username") String username) {
+        Optional<SiteUser> user = Optional.ofNullable(userService.getUser(username));
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/user_delete/{username}") // 유저 삭제 기능
     public ResponseEntity<String> deleteUser(@PathVariable(name = "username") String username) {
         boolean isDeleted = userService.deleteUser(username);
 

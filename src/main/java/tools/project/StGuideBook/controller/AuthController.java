@@ -14,7 +14,7 @@ import tools.project.StGuideBook.dto.UserCreateDTO;
 import tools.project.StGuideBook.service.UserService;
 
 @RestController
-public class AuthController {
+public class AuthController { // 회원가입 및 로그인/아웃 기능에 대한 컨트롤러
 
     private final UserService userService;
 
@@ -23,7 +23,7 @@ public class AuthController {
         this.userService = userService;
 }
 
-    @PostMapping("/user/signup")
+    @PostMapping("/user/signup") // 회원가입
     public ResponseEntity<?> signup(@Valid @RequestBody UserCreateDTO userCreateDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -50,7 +50,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/user/login") // 로그인
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
         boolean isAuthenticated = userService.authenticate(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
@@ -63,7 +63,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/logout") // 로그아웃(세션 만료 방식)
     public ResponseEntity<String> logout(HttpServletRequest request) {
 
         request.getSession().invalidate();
@@ -71,7 +71,7 @@ public class AuthController {
         return ResponseEntity.ok("로그아웃 되었습니다.");
     }
 
-    @DeleteMapping("/unregister/{username}")
+    @DeleteMapping("/unregister/{username}") // 회원탈퇴
     public ResponseEntity<String> deleteUser(@PathVariable(name = "username") String username,
                                              @RequestBody DeleteUserDTO deleteUserDTO) {
         boolean isPasswordValid = userService.verifyPassword(username, deleteUserDTO.getPassword());
