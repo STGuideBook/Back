@@ -1,12 +1,15 @@
 package tools.project.StGuideBook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tools.project.StGuideBook.UserRole.UserRole;
 import tools.project.StGuideBook.domain.SiteUser;
+import tools.project.StGuideBook.dto.ChangePasswordDTO;
 import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.repository.UserRepository;
 
@@ -19,6 +22,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordValidator passwordValidator;
 
     public SiteUser create(String username, String email, String password) {
         UserRole userRole = UserRole.USER;
@@ -78,6 +82,28 @@ public class UserService {
         SiteUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
         return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    public void changePassword(ChangePasswordDTO request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        SiteUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
+
+        if(!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("현재 비밀번호가 잘못됐습니다.");
+        }
+
+        passwordValidator.validate(request.getNewPassword());
+
+        if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("새로운 비밀번호가 기존 비밀번호와 같을 수 없습니다.");
+        }
+
+        user.changePassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        SecurityContextHolder.clearContext();
     }
 
     @Transactional

@@ -8,24 +8,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tools.project.StGuideBook.dto.ChangePasswordDTO;
 import tools.project.StGuideBook.dto.DeleteUserDTO;
 import tools.project.StGuideBook.dto.LoginRequestDTO;
 import tools.project.StGuideBook.dto.UserCreateDTO;
+import tools.project.StGuideBook.service.PasswordValidator;
 import tools.project.StGuideBook.service.UserService;
 
 @RestController
 public class AuthController { // 회원가입 및 로그인/아웃 기능에 대한 컨트롤러
 
     private final UserService userService;
+    private final PasswordValidator passwordValidator;
 
     @Autowired
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, PasswordValidator passwordValidator) {
         this.userService = userService;
-}
+        this.passwordValidator = passwordValidator;
+    }
 
     @PostMapping("/user/signup") // 회원가입
     public ResponseEntity<?> signup(@Valid @RequestBody UserCreateDTO userCreateDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+
+        try { // 비밀번호 작성 시 일정 규칙을 따르도록 설정
+            passwordValidator.validate(userCreateDTO.getPassword1());
+        } catch (IllegalArgumentException e) {
+            bindingResult.rejectValue("password1", "passwordInvalid", e.getMessage());
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
 
@@ -69,6 +80,12 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
         request.getSession().invalidate();
 
         return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
+
+    @PostMapping("/change_password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO request) {
+        userService.changePassword(request);
+        return ResponseEntity.ok("비밀번호가 변경되었습니다.");
     }
 
     @DeleteMapping("/unregister/{username}") // 회원탈퇴

@@ -39,5 +39,7 @@ public class SiteUser {
         this.role = UserRole.USER;
     }
 
-
+    public void changePassword(String password) {
+        this.password = password;
+    }
 }
