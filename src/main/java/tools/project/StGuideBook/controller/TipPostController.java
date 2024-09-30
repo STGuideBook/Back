@@ -16,6 +16,7 @@ import tools.project.StGuideBook.service.UserService;
 import java.security.Principal;
 import java.util.List;
 
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
@@ -33,22 +34,22 @@ public class TipPostController {
         return ResponseEntity.ok(tipPostDTOList);
     }
 
-    @GetMapping(value = "/detail/{id}")
+    @GetMapping(value = "/list/{id}")
     public ResponseEntity<TipPostDTO> detail(@PathVariable("id") Integer id) {
         TipPost tipPost = this.tipPostService.getQuestion(id);
         TipPostDTO tipPostDTO = this.tipPostService.convertToDto(tipPost);
         return ResponseEntity.ok(tipPostDTO);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody TipPostDTO tipPostDTO,
                                     BindingResult bindingResult, Principal principal) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.tipPostService.create(tipPostDTO.getSubject(), tipPostDTO.getContent(), siteUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 }

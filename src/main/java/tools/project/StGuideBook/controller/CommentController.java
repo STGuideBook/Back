@@ -16,6 +16,7 @@ import tools.project.StGuideBook.service.UserService;
 import java.security.Principal;
 import java.util.Map;
 
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
@@ -25,8 +26,7 @@ public class CommentController { // 모든 팁게시판 기능에 대한 컨트�
     private final CommentService commentService;
     private final UserService userService;
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/create/{id}")
+    @PostMapping("/comment_create/{id}")
     public ResponseEntity<?> createComment(@PathVariable("id") Integer id,
                                            @Valid @RequestBody CommentDTO commentDTO,
                                            BindingResult bindingResult,

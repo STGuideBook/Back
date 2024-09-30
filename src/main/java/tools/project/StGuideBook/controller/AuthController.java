@@ -2,6 +2,8 @@ package tools.project.StGuideBook.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import tools.project.StGuideBook.service.UserService;
 @RestController
 public class AuthController { // 회원가입 및 로그인/아웃 기능에 대한 컨트롤러
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
     private final PasswordValidator passwordValidator;
 
@@ -50,11 +53,11 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
             userService.create(userCreateDTO.getUsername(), userCreateDTO.getEmail(),
                     userCreateDTO.getPassword1());
         } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
+            logger.error("signup failed: 이미 등록된 사용자 입니다.", e);
             bindingResult.reject("signupFailed", "이미 등록된 사용자 입니다.");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(bindingResult.getAllErrors());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("예기치 못한 오류로 인하여 가입에 실패하였습니다.", e);
             bindingResult.reject("signupFailed", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(bindingResult.getAllErrors());
         }

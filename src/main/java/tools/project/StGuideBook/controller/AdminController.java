@@ -23,10 +23,8 @@ public class AdminController { // 모든 어드민 기능에 대한 컨트롤러
         this.userService = userService;
     }
 
-    @PostMapping("/grant_admin") // 기존 유저에게 어드민 권한 부여
-    public ResponseEntity<String> grantAdmin(@RequestBody Map<String, String> requestBody) {
-
-        String username = requestBody.get("username");
+    @PostMapping("/grant_admin") // 기존 유저에게 어드민 권한 부여(파라미터 전송)
+    public ResponseEntity<String> grantAdmin(@RequestParam(name = "username") String username) {
 
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("유저 이름은 공백일 수 없습니다");
@@ -37,10 +35,8 @@ public class AdminController { // 모든 어드민 기능에 대한 컨트롤러
         return ResponseEntity.ok(username + "님에게 관리자 권한이 부여되었습니다.");
     }
 
-    @PostMapping("/grant_user") // 기존 어드민 유저로 변경
-    public ResponseEntity<String> grantUser(@RequestBody Map<String, String> requestBody) {
-
-        String username = requestBody.get("username");
+    @PostMapping("/grant_user") // 기존 어드민 유저로 변경(파라미터 전송)
+    public ResponseEntity<String> grantUser(@RequestParam(name = "username") String username) {
 
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("유저 이름은 공백일 수 없습니다");
@@ -73,14 +69,14 @@ public class AdminController { // 모든 어드민 기능에 대한 컨트롤러
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/user_list/{username}") // 해당 유저만 조회
-    public ResponseEntity<Optional<SiteUser>> getUsersByUsername(@PathVariable(name = "username") String username) {
+    @GetMapping("/user_detail") // 해당 유저만 조회
+    public ResponseEntity<Optional<SiteUser>> getUsersByUsername(@RequestParam(name = "username") String username) {
         Optional<SiteUser> user = Optional.ofNullable(userService.getUser(username));
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping("/user_delete/{username}") // 유저 삭제 기능
-    public ResponseEntity<String> deleteUser(@PathVariable(name = "username") String username) {
+    @DeleteMapping("/user_delete") // 유저 삭제 기능
+    public ResponseEntity<String> deleteUser(@RequestParam(name = "username") String username) {
         boolean isDeleted = userService.deleteUser(username);
 
         if(isDeleted) {
