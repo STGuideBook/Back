@@ -29,7 +29,7 @@ public class TipPostService {
         if(question.isPresent()) {
             return question.get();
         } else {
-            throw new DataNotFoundException("question not found");
+            throw new DataNotFoundException("질문을 찾지 못했습니다.");
         }
     }
 
@@ -45,4 +45,23 @@ public class TipPostService {
 
         return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(), commentDTOList);
     }
+
+    public TipPost updatePost(Integer author_id, TipPostDTO tipPostDTO) {
+        TipPost tipPost = tipPostRepository.findById(author_id)
+                .orElseThrow(() -> new DataNotFoundException("게시글을 찾지 못했습니다."));
+
+        // 수정할 내용 업데이트
+        tipPost.setSubject(tipPostDTO.getSubject());
+        tipPost.setContent(tipPostDTO.getContent());
+
+        return tipPostRepository.save(tipPost);
+    }
+
+    public void deletePost(Integer author_id) {
+        TipPost tipPost = tipPostRepository.findById(author_id)
+                .orElseThrow(() -> new DataNotFoundException("게시글을 찾지 못했습니다."));
+
+        tipPostRepository.delete(tipPost);
+    }
+
 }

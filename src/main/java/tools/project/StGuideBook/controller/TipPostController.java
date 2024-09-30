@@ -16,7 +16,6 @@ import tools.project.StGuideBook.service.UserService;
 import java.security.Principal;
 import java.util.List;
 
-@PreAuthorize("isAuthenticated()")
 @RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
@@ -41,6 +40,7 @@ public class TipPostController {
         return ResponseEntity.ok(tipPostDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody TipPostDTO tipPostDTO,
                                     BindingResult bindingResult, Principal principal) {
@@ -50,6 +50,25 @@ public class TipPostController {
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.tipPostService.create(tipPostDTO.getSubject(), tipPostDTO.getContent(), siteUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/update/{author_id}")
+    public ResponseEntity<?> update(@PathVariable("author_id") Integer author_id,
+                                    @Valid @RequestBody TipPostDTO tipPostDTO,
+                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+        TipPost updatedPost = this.tipPostService.updatePost(author_id, tipPostDTO);
+        return ResponseEntity.ok(this.tipPostService.convertToDto(updatedPost));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @DeleteMapping("/delete/{author_id}")
+    public ResponseEntity<?> delete(@PathVariable("author_id") Integer author_id) {
+        this.tipPostService.deletePost(author_id);
+        return ResponseEntity.noContent().build();
     }
 
 }
