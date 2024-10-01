@@ -1,7 +1,10 @@
 package tools.project.StGuideBook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tools.project.StGuideBook.controller.AuthController;
 import tools.project.StGuideBook.domain.TipPost;
 import tools.project.StGuideBook.domain.SiteUser;
 import tools.project.StGuideBook.dto.CommentDTO;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class TipPostService {
 
     private final TipPostRepository tipPostRepository;
+    private static final Logger logger = LoggerFactory.getLogger(TipPostService.class);
 
     public List<TipPost> getList() {
         return this.tipPostRepository.findAll();
@@ -47,7 +51,7 @@ public class TipPostService {
         return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(), commentDTOList);
     }
 
-    public TipPost updatePost(Integer id, TipPostDTO tipPostDTO, SiteUser user) {
+    public TipPost updatePost(Integer id, TipPostDTO tipPostDTO, SiteUser user, LocalDateTime updateDate) {
         TipPost tipPost = tipPostRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("게시글을 찾지 못했습니다."));
 
@@ -59,6 +63,9 @@ public class TipPostService {
         // 수정할 내용 업데이트
         tipPost.setSubject(tipPostDTO.getSubject());
         tipPost.setContent(tipPostDTO.getContent());
+        tipPost.setCreateDate(updateDate);
+
+        logger.info("Create Date from DTO: " + tipPostDTO.getCreateDate());
 
         return tipPostRepository.save(tipPost);
     }
