@@ -1,7 +1,12 @@
 package tools.project.StGuideBook.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +21,7 @@ import tools.project.StGuideBook.service.UserService;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
@@ -23,6 +29,7 @@ public class TipPostController {
 
     private final TipPostService tipPostService;
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @GetMapping("/list")
     public ResponseEntity<List<TipPostDTO>> list() {
@@ -53,21 +60,23 @@ public class TipPostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PutMapping("/update/{author_id}")
-    public ResponseEntity<?> update(@PathVariable("author_id") Integer author_id,
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Integer id,
                                     @Valid @RequestBody TipPostDTO tipPostDTO,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
-        TipPost updatedPost = this.tipPostService.updatePost(author_id, tipPostDTO);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        TipPost updatedPost = this.tipPostService.updatePost(id, tipPostDTO, siteUser);
         return ResponseEntity.ok(this.tipPostService.convertToDto(updatedPost));
     }
 
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/delete/{author_id}")
-    public ResponseEntity<?> delete(@PathVariable("author_id") Integer author_id) {
-        this.tipPostService.deletePost(author_id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id, Principal principal) {
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.tipPostService.deletePost(id, siteUser);
         return ResponseEntity.noContent().build();
     }
 

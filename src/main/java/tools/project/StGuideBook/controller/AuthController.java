@@ -65,11 +65,12 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @PostMapping("/user/login") // 로그인
-    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
 
         boolean isAuthenticated = userService.authenticate(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 
         if(isAuthenticated) {
+            request.getSession().setAttribute("username", loginRequestDTO.getUsername());
             return ResponseEntity.ok("로그인 성공.");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
