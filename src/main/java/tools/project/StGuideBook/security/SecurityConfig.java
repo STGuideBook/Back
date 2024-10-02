@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/login", "/user/signup").permitAll()
                         .requestMatchers("/tip_board/list/**").permitAll()
                         .requestMatchers("/dorm_reviews/review_list/**").permitAll()
+                        .requestMatchers("restaurant_review/review_list/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
         .csrf(AbstractHttpConfigurer::disable)

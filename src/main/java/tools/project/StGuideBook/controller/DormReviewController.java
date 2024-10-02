@@ -27,7 +27,7 @@ public class DormReviewController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{dormId}") // 로그인 해야 리뷰 작성 가능
+    @PostMapping("/add_review/{dormId}") // 로그인 해야 리뷰 작성 가능
     public ResponseEntity<DormReview> addDormReview(@PathVariable("dormId") Long dormId,
                                                     @RequestParam(name = "username") String username,
                                                     @RequestBody DormReviewDTO dormReviewDTO) {
