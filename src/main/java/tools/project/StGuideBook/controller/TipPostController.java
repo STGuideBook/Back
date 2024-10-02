@@ -27,7 +27,7 @@ public class TipPostController {
     private final TipPostService tipPostService;
     private final UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping("/list") // 로그인 없이 팁게시판 조회 가능
     public ResponseEntity<List<TipPostDTO>> list() {
         List<TipPost> tipPostList = this.tipPostService.getList();
         List<TipPostDTO> tipPostDTOList = tipPostList.stream()
@@ -36,7 +36,7 @@ public class TipPostController {
         return ResponseEntity.ok(tipPostDTOList);
     }
 
-    @GetMapping(value = "/list/{id}")
+    @GetMapping(value = "/list/{id}") // 로그인 없이 팁게시판 세부 내용 조회 가능
     public ResponseEntity<TipPostDTO> detail(@PathVariable("id") Integer id) {
         TipPost tipPost = this.tipPostService.getQuestion(id);
         TipPostDTO tipPostDTO = this.tipPostService.convertToDto(tipPost);
@@ -44,7 +44,7 @@ public class TipPostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/create")
+    @PostMapping("/create") // 로그인 해야 팁 작성 가능
     public ResponseEntity<?> create(@Valid @RequestBody TipPostDTO tipPostDTO,
                                     BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
@@ -56,7 +56,7 @@ public class TipPostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{id}") // 작성자 및 어드민만 팁 수정 가능
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
                                     @Valid @RequestBody TipPostDTO tipPostDTO,
                                     BindingResult bindingResult, Principal principal) {
@@ -69,7 +69,7 @@ public class TipPostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}") // 작성자 및 어드민만 팁 삭제 가능
     public ResponseEntity<?> delete(@PathVariable("id") Integer id, Principal principal) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.tipPostService.deletePost(id, siteUser);

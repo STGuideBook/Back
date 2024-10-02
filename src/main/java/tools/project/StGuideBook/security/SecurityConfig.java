@@ -24,6 +24,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/user/login", "/user/signup").permitAll()
+                        .requestMatchers("/tip_board/list/**").permitAll()
+                        .requestMatchers("/dorm_reviews/review_list/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
         .csrf(AbstractHttpConfigurer::disable)

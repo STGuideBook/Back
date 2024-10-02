@@ -26,10 +26,6 @@ public class TipPost {
     @Column(name = "createDate", updatable = false)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "tipPost", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
-    private List<Comment> commentList;
-
     @ManyToOne
     private SiteUser author;
 

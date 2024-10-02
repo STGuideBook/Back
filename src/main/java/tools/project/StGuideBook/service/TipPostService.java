@@ -1,13 +1,10 @@
 package tools.project.StGuideBook.service;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import tools.project.StGuideBook.controller.AuthController;
+import tools.project.StGuideBook.UserRole.UserRole;
 import tools.project.StGuideBook.domain.TipPost;
 import tools.project.StGuideBook.domain.SiteUser;
-import tools.project.StGuideBook.dto.CommentDTO;
 import tools.project.StGuideBook.dto.TipPostDTO;
 import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.exception.UnauthorizedException;
@@ -16,14 +13,12 @@ import tools.project.StGuideBook.repository.TipPostRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class TipPostService {
 
     private final TipPostRepository tipPostRepository;
-    private static final Logger logger = LoggerFactory.getLogger(TipPostService.class);
 
     public List<TipPost> getList() {
         return this.tipPostRepository.findAll();
@@ -44,11 +39,7 @@ public class TipPostService {
     }
 
     public TipPostDTO convertToDto(TipPost tipPost) {
-        List<CommentDTO> commentDTOList = tipPost.getCommentList().stream()
-                .map(comment -> new CommentDTO(comment.getContent()))
-                .collect(Collectors.toList());
-
-        return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(), commentDTOList);
+        return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate());
     }
 
     public TipPost updatePost(Integer id, TipPostDTO tipPostDTO, SiteUser user, LocalDateTime updateDate) {
@@ -56,7 +47,7 @@ public class TipPostService {
                 .orElseThrow(() -> new DataNotFoundException("게시글을 찾지 못했습니다."));
 
         // 작성자 확인
-        if (!tipPost.getAuthor().equals(user)) {
+        if (!tipPost.getAuthor().equals(user) && !UserRole.ADMIN.equals(user.getRole())) {
             throw new UnauthorizedException("수정 권한이 없습니다.");
         }
 
@@ -64,8 +55,6 @@ public class TipPostService {
         tipPost.setSubject(tipPostDTO.getSubject());
         tipPost.setContent(tipPostDTO.getContent());
         tipPost.setCreateDate(updateDate);
-
-        logger.info("Create Date from DTO: " + tipPostDTO.getCreateDate());
 
         return tipPostRepository.save(tipPost);
     }
@@ -75,7 +64,7 @@ public class TipPostService {
                 .orElseThrow(() -> new DataNotFoundException("게시글을 찾지 못했습니다."));
 
         // 작성자 확인
-        if (!tipPost.getAuthor().equals(user)) {
+        if (!tipPost.getAuthor().equals(user) && !UserRole.ADMIN.equals(user.getRole())) {
             throw new UnauthorizedException("삭제 권한이 없습니다.");
         }
 

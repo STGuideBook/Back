@@ -19,13 +19,10 @@ public class TipPostDTO {
 
     private LocalDateTime createDate;
 
-    private List<CommentDTO> commentList;
-
-    public TipPostDTO(String subject, String content, LocalDateTime createDate, List<CommentDTO> commentList) {
+    public TipPostDTO(String subject, String content, LocalDateTime createDate) {
         this.subject = subject;
         this.content = content;
         this.createDate = createDate;
-        this.commentList = commentList;
     }
 
     public TipPostDTO() {}
