@@ -93,7 +93,7 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @DeleteMapping("/unregister/{username}") // 회원탈퇴
-    public ResponseEntity<String> deleteUser(@PathVariable(name = "username") String username,
+    public ResponseEntity<String> deleteUser(@RequestParam(name = "username") String username,
                                              @RequestBody DeleteUserDTO deleteUserDTO) {
         boolean isPasswordValid = userService.verifyPassword(username, deleteUserDTO.getPassword());
 

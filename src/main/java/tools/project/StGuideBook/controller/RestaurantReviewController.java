@@ -11,7 +11,6 @@ import tools.project.StGuideBook.dto.RestaurantReviewDTO;
 import tools.project.StGuideBook.service.RestaurantReviewService;
 import tools.project.StGuideBook.service.UserService;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
