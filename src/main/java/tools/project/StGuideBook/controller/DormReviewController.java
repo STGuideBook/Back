@@ -11,6 +11,7 @@ import tools.project.StGuideBook.dto.DormReviewDTO;
 import tools.project.StGuideBook.service.DormReviewService;
 import tools.project.StGuideBook.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -58,9 +59,9 @@ public class DormReviewController {
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/delete_review") // 작성자 및 어드민만 리뷰 삭제 가능
     public ResponseEntity<?> deleteDormReview(@RequestParam(name = "reviewId") Long reviewId,
-                                              @RequestParam(name = "username") String username) {
+                                              Principal principal) {
 
-        SiteUser siteUser = this.userService.getUser(username);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
         this.dormReviewService.deleteDormReview(reviewId, siteUser);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
