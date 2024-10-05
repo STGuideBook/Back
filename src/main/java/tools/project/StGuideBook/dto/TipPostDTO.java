@@ -3,11 +3,12 @@ package tools.project.StGuideBook.dto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
+@Setter
 public class TipPostDTO {
 
     @NotEmpty(message = "제목은 필수 입력사항 입니다.")
@@ -19,10 +20,13 @@ public class TipPostDTO {
 
     private LocalDateTime createDate;
 
-    public TipPostDTO(String subject, String content, LocalDateTime createDate) {
+    private int likeCount;
+
+    public TipPostDTO(String subject, String content, LocalDateTime createDate, int likeCount) {
         this.subject = subject;
         this.content = content;
         this.createDate = createDate;
+        this.likeCount = likeCount;
     }
 
     public TipPostDTO() {}

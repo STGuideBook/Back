@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +31,16 @@ public class TipPost {
     @ManyToOne
     private SiteUser author;
 
+    @ManyToMany
+    @JoinTable(
+            name = "tip_post_likes",
+            joinColumns = @JoinColumn(name = "tip_post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<SiteUser> likedUsers = new HashSet<>();
+
+
+
     public TipPost(String subject, String content, LocalDateTime createDate, SiteUser author) {
         this.subject = subject;
         this.content = content;
@@ -37,4 +49,16 @@ public class TipPost {
     }
 
     public TipPost() {}
+
+    public void toggleLike(SiteUser user) {
+        if (likedUsers.contains(user)) {
+            likedUsers.remove(user); // 좋아요 취소
+        } else {
+            likedUsers.add(user); // 좋아요 추가
+        }
+    }
+
+    public int getLikeCount() {
+        return likedUsers.size(); // 좋아요 수 반환
+    }
 }

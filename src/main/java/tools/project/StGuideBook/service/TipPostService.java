@@ -39,7 +39,7 @@ public class TipPostService {
     }
 
     public TipPostDTO convertToDto(TipPost tipPost) {
-        return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate());
+        return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(), tipPost.getLikeCount());
     }
 
     public TipPost updatePost(Integer id, TipPostDTO tipPostDTO, SiteUser user, LocalDateTime updateDate) {
@@ -69,5 +69,12 @@ public class TipPostService {
         }
 
         tipPostRepository.delete(tipPost);
+    }
+
+    public void toggleLike(Integer postId, SiteUser user) {
+        TipPost tipPost = tipPostRepository.findById(postId)
+                .orElseThrow(() -> new DataNotFoundException("게시글을 찾지 못했습니다."));
+        tipPost.toggleLike(user); // 좋아요 추가 또는 취소
+        tipPostRepository.save(tipPost);
     }
 }

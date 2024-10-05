@@ -2,7 +2,6 @@ package tools.project.StGuideBook.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +17,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Slf4j
+//@Slf4j
 @RequestMapping("/tip_board")
 @RequiredArgsConstructor
 @RestController
@@ -76,4 +75,12 @@ public class TipPostController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/like/{id}") // 로그인 해야 좋아요 가능
+    public ResponseEntity<Integer> likePost(@PathVariable("id") Integer id, Principal principal) {
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.tipPostService.toggleLike(id, siteUser); // 좋아요 추가 또는 취소 메서드 호출
+        TipPost updatedPost = this.tipPostService.getQuestion(id); // 좋아요 수를 가져오기 위해 게시글 조회
+        return ResponseEntity.ok(updatedPost.getLikeCount()); // 현재 좋아요 수 반환
+    }
 }
