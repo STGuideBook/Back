@@ -15,7 +15,6 @@ java {
 
 bootJar {
 	archiveBaseName.set('StGuideBook')
-	archiveFileName.set('StGuideBook-0.0.1-SNAPSHOT.jar')
 }
 
 
