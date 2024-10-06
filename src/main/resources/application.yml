@@ -17,3 +17,6 @@ spring:
   logging:
     level:
       root:DEBUG
+
+server:
+  port: ${PORT:8080}
