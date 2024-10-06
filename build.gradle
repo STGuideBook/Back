@@ -15,12 +15,9 @@ java {
 
 bootJar {
 	archiveBaseName.set('StGuideBook')
-	manifest {
-		attributes(
-				'Main-Class': 'tools.project.StGuideBookApplication'
-		)
-	}
+	archiveFileName.set('StGuideBook-0.0.1-SNAPSHOT.jar')
 }
+
 
 repositories {
 	mavenCentral()
