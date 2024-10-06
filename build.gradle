@@ -15,7 +15,12 @@ java {
 
 bootJar {
 	archiveBaseName.set('StGuideBook')
-	mainClass = 'tools.project.StGuideBook'
+	mainClass = 'tools.project.StGuideBookApplication'
+	manifest {
+		attributes(
+				'Main-Class': mainClass.get()
+		)
+	}
 }
 
 repositories {
