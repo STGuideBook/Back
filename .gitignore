@@ -19,6 +19,7 @@ src/main/resources/application-dev.yml
 
 # build/libs 디렉토리의 JAR 파일을 포함하려면 아래 라인 추가
 !/build/libs/
+!/build/libs/*.jar
 
 ## IntelliJ IDEA ##
 .idea/
