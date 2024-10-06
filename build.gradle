@@ -13,6 +13,10 @@ java {
 	}
 }
 
+bootJar {
+	archiveBaseName.set('StGuideBook')
+}
+
 repositories {
 	mavenCentral()
 }
