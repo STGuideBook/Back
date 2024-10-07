@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class main {
 
-    @GetMapping("/")
+    @GetMapping("/main")
     public String index() {
         return "main"; // index.html 파일을 반환
     }
