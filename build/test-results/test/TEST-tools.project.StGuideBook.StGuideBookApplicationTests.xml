@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tools.project.StGuideBook.StGuideBookApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-06T11:42:40" hostname="choedohyeon-ui-MacBookAir.local" time="0.255">
+  <properties/>
+  <testcase name="contextLoads()" classname="tools.project.StGuideBook.StGuideBookApplicationTests" time="0.255"/>
+  <system-out><![CDATA[20:42:32.576 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [tools.project.StGuideBook.StGuideBookApplicationTests]: StGuideBookApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:42:32.611 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration tools.project.StGuideBook.StGuideBookApplication for test class tools.project.StGuideBook.StGuideBookApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.3)
+
+2024-10-06T20:42:32.749+09:00  INFO 87507 --- [StGuideBook] [    Test worker] t.p.S.StGuideBookApplicationTests        : Starting StGuideBookApplicationTests using Java 17.0.12 with PID 87507 (started by choidohyun in /Users/choidohyun/Desktop/tools_project/StGuideBook)
+2024-10-06T20:42:32.749+09:00  INFO 87507 --- [StGuideBook] [    Test worker] t.p.S.StGuideBookApplicationTests        : No active profile set, falling back to 1 default profile: "default"
+2024-10-06T20:42:32.992+09:00  INFO 87507 --- [StGuideBook] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-06T20:42:33.015+09:00  INFO 87507 --- [StGuideBook] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 6 JPA repository interfaces.
+2024-10-06T20:42:33.214+09:00  INFO 87507 --- [StGuideBook] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-06T20:42:33.236+09:00  INFO 87507 --- [StGuideBook] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-10-06T20:42:33.247+09:00  INFO 87507 --- [StGuideBook] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-06T20:42:33.346+09:00  INFO 87507 --- [StGuideBook] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-06T20:42:33.356+09:00  INFO 87507 --- [StGuideBook] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-06T20:42:35.987+09:00  INFO 87507 --- [StGuideBook] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6b6fd0
+2024-10-06T20:42:35.991+09:00  INFO 87507 --- [StGuideBook] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-06T20:42:36.259+09:00  WARN 87507 --- [StGuideBook] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-06T20:42:36.259+09:00  WARN 87507 --- [StGuideBook] [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-10-06T20:42:36.692+09:00  INFO 87507 --- [StGuideBook] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: alter table tip_post modify column content TEXT
+2024-10-06T20:42:40.453+09:00  INFO 87507 --- [StGuideBook] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-06T20:42:40.681+09:00  WARN 87507 --- [StGuideBook] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-06T20:42:40.692+09:00  INFO 87507 --- [StGuideBook] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userSecurityService
+2024-10-06T20:42:40.940+09:00  INFO 87507 --- [StGuideBook] [    Test worker] t.p.S.StGuideBookApplicationTests        : Started StGuideBookApplicationTests in 8.275 seconds (process running for 8.73)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

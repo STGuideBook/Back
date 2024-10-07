@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: StGuideBook
+  datasource:
+    url: jdbc:mysql://gx97kbnhgjzh3efb.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vi857afwy1xe5u61
+    username: y2534bnjyzh9ubuu
+    password: iq2ok99090q6xtx2
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  logging:
+    level:
+      root:DEBUG
