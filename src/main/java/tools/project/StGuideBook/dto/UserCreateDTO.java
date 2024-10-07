@@ -1,9 +1,6 @@
 package tools.project.StGuideBook.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +22,7 @@ public class UserCreateDTO {
     @Email
     private String email;
 
-    @Size(min = 2, max = 2)
+    @Max(value = 2, message = "학생 ID는 2 이하이어야 합니다.")
     @NotNull(message = "학번은 필수항목 입니다.")
     private Integer student_Id;
 
