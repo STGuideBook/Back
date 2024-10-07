@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class main {
 
     @GetMapping("/")
-    @ResponseBody
     public String index() {
         return "main"; // index.html 파일을 반환
     }
