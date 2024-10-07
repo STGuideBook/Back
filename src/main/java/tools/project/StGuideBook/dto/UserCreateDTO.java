@@ -25,6 +25,7 @@ public class UserCreateDTO {
     @Email
     private String email;
 
+    @Size(min = 2, max = 2)
     @NotNull(message = "학번은 필수항목 입니다.")
     private Integer student_Id;
 

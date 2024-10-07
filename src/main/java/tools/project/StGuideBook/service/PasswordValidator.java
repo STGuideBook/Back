@@ -18,7 +18,7 @@ public class PasswordValidator { // 패스워드 작성 규칙
             throw new IllegalArgumentException("적어도 하나 이상의 숫자가 들어가야 합니다.");
         }
 
-        if (!password.matches(".*[!@#$%^&*()].*")) {
+        if (!password.matches(".*[!@#$%^&*()_-].*")) {
             throw new IllegalArgumentException("적어도 하나 이상의 특수문자가 들어가야 합니다.");
         }
     }
