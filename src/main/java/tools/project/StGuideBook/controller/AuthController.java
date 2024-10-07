@@ -92,6 +92,17 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
         return ResponseEntity.ok("비밀번호가 변경되었습니다.");
     }
 
+    @GetMapping("/user/status") // 로그인 상태 확인
+    public ResponseEntity<String> checkLoginStatus(HttpServletRequest request) {
+        String username = (String) request.getSession().getAttribute("username");
+
+        if (username != null) {
+            return ResponseEntity.ok("로그인 상태: " + username);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 필요");
+        }
+    }
+
     @DeleteMapping("/unregister/{username}") // 회원탈퇴
     public ResponseEntity<String> deleteUser(@PathVariable(name = "username") String username,
                                              @RequestBody DeleteUserDTO deleteUserDTO) {
