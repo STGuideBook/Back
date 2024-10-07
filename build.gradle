@@ -55,6 +55,9 @@ dependencies {
 	// log
 	implementation 'org.springframework.boot:spring-boot-starter-logging'  // Logback 포함
 
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+
 }
 
 tasks.named('test') {

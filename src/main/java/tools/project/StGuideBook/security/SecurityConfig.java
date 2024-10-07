@@ -23,7 +23,7 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/main").permitAll()
                         .requestMatchers("/user/login", "/user/signup").permitAll()
                         .requestMatchers("/tip_board/list/**").permitAll()
                         .requestMatchers("/dorm_reviews/review_list/**").permitAll()
