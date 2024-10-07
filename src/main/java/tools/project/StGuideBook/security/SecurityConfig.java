@@ -23,12 +23,13 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/main").permitAll()
-                        .requestMatchers("/user/login", "/user/signup").permitAll()
-                        .requestMatchers("/tip_board/list/**").permitAll()
-                        .requestMatchers("/dorm_reviews/review_list/**").permitAll()
-                        .requestMatchers("restaurant_review/review_list/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/main").permitAll()
+//                        .requestMatchers("/user/login", "/user/signup").permitAll()
+//                        .requestMatchers("/tip_board/list/**").permitAll()
+//                        .requestMatchers("/dorm_reviews/review_list/**").permitAll()
+//                        .requestMatchers("restaurant_review/review_list/**").permitAll()
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults())
