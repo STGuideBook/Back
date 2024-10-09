@@ -18,6 +18,10 @@ public class UserCreateDTO {
     @NotEmpty(message = "비밀번호 확인은 필수항목 입니다.")
     private String password2;
 
+    @NotEmpty(message = "이메일은 필수항목 입니다.")
+    @Email
+    private String email;
+
     @Min(value = 1, message = "학생 ID는 1 이상이어야 합니다.")
     @NotNull(message = "학번은 필수항목 입니다.")
     private Integer student_Id;
