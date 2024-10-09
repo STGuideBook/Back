@@ -17,16 +17,13 @@ public class SiteUser {
 
     private String password;
 
-    private String email;
-
     private Integer student_Id;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public SiteUser(String username, String email, String encode, Integer student_Id, UserRole role) {
+    public SiteUser(String username, String encode, Integer student_Id, UserRole role) {
         this.username = username;
-        this.email = email;
         this.password = encode;
         this.student_Id = student_Id;
         this.role = role;

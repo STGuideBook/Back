@@ -50,8 +50,7 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
         }
 
         try {
-            userService.create(userCreateDTO.getUsername(), userCreateDTO.getEmail(),
-                    userCreateDTO.getPassword1(), userCreateDTO.getStudent_Id());
+            userService.create(userCreateDTO.getUsername(), userCreateDTO.getPassword1(), userCreateDTO.getStudent_Id());
         } catch (DataIntegrityViolationException e) {
             logger.error("signup failed: 이미 등록된 사용자 입니다.", e);
             bindingResult.reject("signupFailed", "이미 등록된 사용자 입니다.");
