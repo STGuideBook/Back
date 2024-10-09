@@ -24,9 +24,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final PasswordValidator passwordValidator;
 
-    public SiteUser create(String username, String email, String password, Integer student_Id) {
+    public SiteUser create(String username, String password, Integer student_Id) {
         UserRole userRole = UserRole.USER;
-        SiteUser user = new SiteUser(username, email, passwordEncoder.encode(password), student_Id, userRole);
+        SiteUser user = new SiteUser(username, passwordEncoder.encode(password), student_Id, userRole);
         this.userRepository.save(user);
         return user;
     }
