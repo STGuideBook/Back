@@ -20,16 +20,16 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-//    private final CorsConfigurationSource corsConfigurationSource;
-//
-//    public SecurityConfig(CorsConfigurationSource corsConfigurationSource) {
-//        this.corsConfigurationSource = corsConfigurationSource;
-//    }
+    private final CorsConfigurationSource corsConfigurationSource;
+
+    public SecurityConfig(CorsConfigurationSource corsConfigurationSource) {
+        this.corsConfigurationSource = corsConfigurationSource;
+    }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-//        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
+//        http
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 //                        .requestMatchers("/main").permitAll()
 //                        .requestMatchers("/user/login", "/user/signup").permitAll()
