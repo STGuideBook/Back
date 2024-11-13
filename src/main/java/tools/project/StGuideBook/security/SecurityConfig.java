@@ -43,7 +43,10 @@ public class SecurityConfig {
 
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"status\": \"success\", \"message\": \"로그아웃 되었습니다.\"}");
+                        })
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 );

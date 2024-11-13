@@ -1,6 +1,7 @@
 package tools.project.StGuideBook.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,9 @@ import tools.project.StGuideBook.dto.LoginRequestDTO;
 import tools.project.StGuideBook.dto.UserCreateDTO;
 import tools.project.StGuideBook.service.PasswordValidator;
 import tools.project.StGuideBook.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class AuthController { // 회원가입 및 로그인/아웃 기능에 대한 컨트롤러
@@ -78,12 +82,18 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
         }
     }
 
-    @PostMapping("/logout") // 로그아웃(세션 만료 방식)
-    public ResponseEntity<String> logout(HttpServletRequest request) {
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 기존 세션이 없으면 null 반환
+        if (session != null) {
+            session.invalidate(); // 세션이 존재할 경우에만 무효화
+        }
 
-        request.getSession().invalidate();
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "로그아웃 되었습니다.");
 
-        return ResponseEntity.ok("로그아웃 되었습니다.");
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/change_password")
@@ -93,13 +103,19 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @GetMapping("/user/status") // 로그인 상태 확인
-    public ResponseEntity<String> checkLoginStatus(HttpServletRequest request) {
+    public ResponseEntity<Map<String, String>> checkLoginStatus(HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("username");
+        Map<String, String> response = new HashMap<>();
 
         if (username != null) {
-            return ResponseEntity.ok("로그인 상태: " + username);
+            response.put("status", "success");
+            response.put("message", "로그인 상태입니다.");
+            response.put("username", username);
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 필요");
+            response.put("status", "fail");
+            response.put("message", "로그인이 필요합니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
 
