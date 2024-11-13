@@ -69,16 +69,29 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @PostMapping("/user/login") // 로그인
-    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
 
+        // 인증 로직
         boolean isAuthenticated = userService.authenticate(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 
-        if(isAuthenticated) {
+        // JSON 응답 준비
+        Map<String, String> response = new HashMap<>();
+
+        if (isAuthenticated) {
+            // 세션에 사용자 이름 저장
             request.getSession().setAttribute("username", loginRequestDTO.getUsername());
-            return ResponseEntity.ok("로그인 성공.");
+
+            response.put("status", "success");
+            response.put("message", "로그인 성공.");
+            response.put("username", loginRequestDTO.getUsername());
+
+            return ResponseEntity.ok(response); // 200 OK
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("로그인 실패 : 사용자ID 혹은 비밀번호가 잘못되었습니다.");
+            // 실패 응답
+            response.put("status", "fail");
+            response.put("message", "로그인 실패 : 사용자ID 또는 비밀번호가 잘못되었습니다.");
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response); // 401 Unauthorized
         }
     }
 
