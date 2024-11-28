@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<SiteUser, Long> {
     @Modifying
     @Transactional
     void deleteByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

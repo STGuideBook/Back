@@ -31,6 +31,10 @@ public class UserService {
         return user;
     }
 
+    public boolean isUsernameTaken(String username) {
+        return userRepository.existsByUsername(username); // JPA 메서드
+    }
+
     public SiteUser getUser(String username) {
         Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
         return siteUser.orElseThrow(() -> new DataNotFoundException("User not found"));

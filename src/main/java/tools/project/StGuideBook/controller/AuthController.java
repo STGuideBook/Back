@@ -47,25 +47,33 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
 
-        if(!userCreateDTO.getPassword1().equals(userCreateDTO.getPassword2())) {
-            bindingResult.rejectValue("password2", "passwordInCorrect",
-                    "2개의 패스워드가 일치하지 않습니다.");
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        // 아이디 중복 검사 추가
+        if (userService.isUsernameTaken(userCreateDTO.getUsername())) {
+            bindingResult.rejectValue("username", "usernameDuplicate", "이미 사용 중인 아이디입니다.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(bindingResult.getAllErrors());
         }
 
+        // 회원 생성
         try {
             userService.create(userCreateDTO.getUsername(),
                     userCreateDTO.getPassword1(), userCreateDTO.getStudent_Id());
-        } catch (DataIntegrityViolationException e) {
-            logger.error("signup failed: 이미 등록된 사용자 입니다.", e);
-            bindingResult.reject("signupFailed", "이미 등록된 사용자 입니다.");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(bindingResult.getAllErrors());
         } catch (Exception e) {
             logger.error("예기치 못한 오류로 인하여 가입에 실패하였습니다.", e);
             bindingResult.reject("signupFailed", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(bindingResult.getAllErrors());
         }
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/user/check-username")
+    public ResponseEntity<?> checkUsernameDuplicate(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        boolean exists = userService.isUsernameTaken(username);
+        if (exists) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용 중인 아이디입니다.");
+        }
+        return ResponseEntity.ok("사용 가능한 아이디입니다.");
     }
 
     @PostMapping("/user/login") // 로그인
