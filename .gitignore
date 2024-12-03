@@ -1,25 +1,28 @@
-## Validation ##
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-## Security ##
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
 ## 기본적인 OS 관련 파일 ##
 .DS_Store
 Thumbs.db
-src/main/resources/application-dev.yml
+
+## Spring Boot 환경 변수 파일 ##
+src/main/resources/application-*.yml
+.env
 
 ## 로그 파일 ##
 *.log
-.log.
+spring.log
 
 ## 빌드 디렉토리 ##
 /build/
-!/src/main//build/
-!/src/test//build/
+/out/
+/.gradle/
+*.class
 
-# build/libs 디렉토리의 JAR 파일을 포함하려면 아래 라인 추가
-!/build/libs/
-!/build/libs/*.jar
+## Gradle 캐시 ##
+.gradle/
+!gradle/wrapper/gradle-wrapper.properties
+
+## JAR 및 WAR 파일 ##
+*.jar
+*.war
 
 ## IntelliJ IDEA ##
 .idea/
@@ -27,74 +30,26 @@ src/main/resources/application-dev.yml
 *.iml
 *.ipr
 out/
-.idea/
-*.class
-*.log
-*.tmp
-*.swp
-*~.nib
-*.orig
-*.rej
-*~
 
-## Gradle ##
-.gradle/
-
-## Comment Reason for ignoring below ##
-.classpath
-.project
-.settings/
-.idea/
-*.iml
-*.ipr
-.idea//workspace.xml
-.idea//tasks.xml
-.idea//usage.statistics.xml
-.idea//dictionaries
-.idea//shelf
-.idea//vcs.xml
+## Lombok ##
+lombok.config
 
 ## MacOS ##
 .DS_Store
 
 ## 기타 ##
-*.class
-*.log
-*.ctxt
-*.d
-*.obj
-*.lst
-*.su
-*.idb
-*.pdb
-*.lib
-*.a
-*.la
-*.lo
-*.def
-*.exp
-*.plg
-*.dll
-*.dylib
-*.exe
-*.so
-*.o
-*.pyc
-*.pyo
+*.tmp
 *.swp
 *.swo
-*.res
-*.tds
+*.bak
+*.orig
+*.rej
+*.pyc
+*.pyo
+*.d
+*.o
+*.obj
+*.dll
+*.so
+*.exe
 .vscode/
-
-## Spring Boot specific ##
-spring.log
-
-## 환경 변수 파일 ##
-.env
-
-## Lombok generated ##
-lombok.config
-
-## 기타 ##
-*.DS_Store
