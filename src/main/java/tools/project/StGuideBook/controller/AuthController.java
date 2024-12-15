@@ -87,6 +87,7 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
         if (isAuthenticated) {
             // 세션에 사용자 이름 저장
             request.getSession().setAttribute("username", loginRequestDTO.getUsername());
+            request.getSession().setAttribute("student_id", loginRequestDTO.getStudent_Id());
 
             response.put("status", "success");
             response.put("message", "로그인 성공.");
