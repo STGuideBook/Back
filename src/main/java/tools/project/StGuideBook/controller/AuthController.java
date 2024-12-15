@@ -91,6 +91,7 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
             response.put("status", "success");
             response.put("message", "로그인 성공.");
             response.put("username", loginRequestDTO.getUsername());
+            response.put("student_Id", loginRequestDTO.getStudent_Id());
 
             return ResponseEntity.ok(response); // 200 OK
         } else {
