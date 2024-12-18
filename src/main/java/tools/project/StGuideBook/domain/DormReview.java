@@ -21,11 +21,12 @@ public class DormReview {
     private String comment;
 
     @ManyToOne
+    @JoinColumn(name = "site_user_id", nullable = false)
     private SiteUser siteUser;
 
     private LocalDateTime createDate;
 
-    public DormReview(Dorm dorm, SiteUser siteUser, LocalDateTime createDate,String comment) {
+    public DormReview(Dorm dorm, SiteUser siteUser, LocalDateTime createDate, String comment) {
         this.dorm = dorm;
         this.siteUser = siteUser;
         this.createDate = createDate;
