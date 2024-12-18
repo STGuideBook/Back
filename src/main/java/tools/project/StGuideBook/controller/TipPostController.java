@@ -42,6 +42,7 @@ public class TipPostController {
         return ResponseEntity.ok(tipPostDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create") // 로그인 해야 팁 작성 가능
     public ResponseEntity<?> create(@Valid @RequestBody TipPostDTO tipPostDTO,
                                     BindingResult bindingResult, Principal principal) {
