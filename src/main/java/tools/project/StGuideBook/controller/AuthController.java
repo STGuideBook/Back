@@ -76,13 +76,13 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @PostMapping("/user/login") // 로그인
-    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
 
         // 인증 로직
         boolean isAuthenticated = userService.authenticate(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 
         // JSON 응답 준비
-        Map<String, String> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
 
         if (isAuthenticated) {
             // 세션에 사용자 이름 저장
@@ -93,6 +93,7 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
 
             response.put("status", "success");
             response.put("message", "로그인 성공.");
+            response.put("student_Id", student_Id);
             response.put("username", loginRequestDTO.getUsername());
 
             return ResponseEntity.ok(response); // 200 OK
