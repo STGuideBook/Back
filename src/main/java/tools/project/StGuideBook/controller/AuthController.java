@@ -86,10 +86,10 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
 
         if (isAuthenticated) {
             // 세션에 사용자 이름 저장
-            Integer student_Id = userService.getStudentId(loginRequestDTO.getUsername());
+            // Integer student_Id = userService.getStudentId(loginRequestDTO.getUsername());
 
             request.getSession().setAttribute("username", loginRequestDTO.getUsername());
-            request.getSession().setAttribute("student_Id", student_Id);
+            // request.getSession().setAttribute("student_Id", student_Id);
 
             response.put("status", "success");
             response.put("message", "로그인 성공.");
@@ -128,14 +128,14 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     @GetMapping("/user/status") // 로그인 상태 확인
     public ResponseEntity<Map<String, Object>> checkLoginStatus(HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("username");
-        Integer student_Id = (Integer) request.getSession().getAttribute("student_Id");
+        // Integer student_Id = (Integer) request.getSession().getAttribute("student_Id");
         Map<String, Object> response = new HashMap<>();
 
         if (username != null) {
             response.put("status", "success");
             response.put("message", "로그인 상태입니다.");
             response.put("username", username);
-            response.put("student_Id", student_Id);
+            // response.put("student_Id", student_Id);
             return ResponseEntity.ok(response);
         } else {
             response.put("status", "fail");
