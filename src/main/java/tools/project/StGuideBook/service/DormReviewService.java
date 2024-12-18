@@ -12,6 +12,7 @@ import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.exception.UnauthorizedException;
 import tools.project.StGuideBook.repository.DormRepository;
 import tools.project.StGuideBook.repository.DormReviewRepository;
+import tools.project.StGuideBook.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,19 +22,25 @@ public class DormReviewService {
 
     private final DormReviewRepository dormReviewRepository;
     private final DormRepository dormRepository;
+    private final UserRepository userRepository;
 
 
     @Autowired
-    public DormReviewService(DormReviewRepository dormReviewRepository, DormRepository dormRepository) {
+    public DormReviewService(DormReviewRepository dormReviewRepository,
+                             DormRepository dormRepository, UserRepository userRepository) {
         this.dormReviewRepository = dormReviewRepository;
         this.dormRepository = dormRepository;
+        this.userRepository = userRepository;
     }
 
     public DormReview addDormReview(Long dormId, String username, String comment) {
-        Dorm dorm = dormRepository.findById(dormId).orElseThrow(() ->
-                new IllegalArgumentException("기숙사를 찾을 수 없습니다"));
+        Dorm dorm = dormRepository.findById(dormId)
+                .orElseThrow(() -> new IllegalArgumentException("기숙사를 찾을 수 없습니다"));
 
-        DormReview dormReview = new DormReview(dorm, username, LocalDateTime.now(), comment);
+        SiteUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+
+        DormReview dormReview = new DormReview(dorm, user, LocalDateTime.now(), comment);
 
         return dormReviewRepository.save(dormReview);
     }
@@ -50,11 +57,11 @@ public class DormReviewService {
         DormReview dormReview = dormReviewRepository.findById(dormId)
                 .orElseThrow(() -> new DataNotFoundException("리뷰를 찾지 못했습니다."));
 
-        if (dormReview.getUsername() == null || user.getUsername() == null || user.getRole() == null) {
+        if (dormReview.getSiteUser().getUsername() == null || user.getUsername() == null || user.getRole() == null) {
             throw new UnauthorizedException("유효하지 않은 사용자 정보입니다.");
         }
 
-        if (!dormReview.getUsername().equals(user.getUsername()) && user.getRole() != UserRole.ADMIN) {
+        if (!dormReview.getSiteUser().getUsername().equals(user.getUsername()) && user.getRole() != UserRole.ADMIN) {
             throw new UnauthorizedException("삭제 권한이 없습니다.");
         }
 

@@ -18,9 +18,6 @@ public class DormReview {
     private Dorm dorm;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
     private String comment;
 
     @ManyToOne
@@ -28,9 +25,9 @@ public class DormReview {
 
     private LocalDateTime createDate;
 
-    public DormReview(Dorm dorm, String username, LocalDateTime createDate,String comment) {
+    public DormReview(Dorm dorm, SiteUser siteUser, LocalDateTime createDate,String comment) {
         this.dorm = dorm;
-        this.username = username;
+        this.siteUser = siteUser;
         this.createDate = createDate;
         this.comment = comment;
     }

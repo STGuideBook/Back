@@ -23,7 +23,6 @@ public class DormReviewDTO {
         this.studentId = studentId;
     }
 
-    // 정적 메서드로 DormReview -> DormReviewDTO 변환
     public static DormReviewDTO fromEntity(DormReview dormReview) {
         DormDTO dormDTO = new DormDTO(
                 dormReview.getDorm().getDormId(),
@@ -31,7 +30,7 @@ public class DormReviewDTO {
         );
 
         return new DormReviewDTO(
-                dormReview.getDorm().getDormId(),
+                dormReview.getReviewId(),
                 dormDTO,
                 dormReview.getSiteUser().getUsername(),
                 dormReview.getComment(),
