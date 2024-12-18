@@ -76,23 +76,21 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @PostMapping("/user/login") // 로그인
-    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
 
         // 인증 로직
         boolean isAuthenticated = userService.authenticate(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 
         // JSON 응답 준비
-        Map<String, Object> response = new HashMap<>();
+        Map<String, String> response = new HashMap<>();
 
         if (isAuthenticated) {
             // 세션에 사용자 이름 저장
             request.getSession().setAttribute("username", loginRequestDTO.getUsername());
-            request.getSession().setAttribute("student_Id", loginRequestDTO.getStudent_Id());
 
             response.put("status", "success");
             response.put("message", "로그인 성공.");
             response.put("username", loginRequestDTO.getUsername());
-            response.put("student_Id", loginRequestDTO.getStudent_Id());
 
             return ResponseEntity.ok(response); // 200 OK
         } else {
@@ -125,14 +123,16 @@ public class AuthController { // 회원가입 및 로그인/아웃 기능에 대
     }
 
     @GetMapping("/user/status") // 로그인 상태 확인
-    public ResponseEntity<Map<String, String>> checkLoginStatus(HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> checkLoginStatus(HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("username");
-        Map<String, String> response = new HashMap<>();
+        Integer student_Id = (Integer) request.getSession().getAttribute("student_Id");
+        Map<String, Object> response = new HashMap<>();
 
         if (username != null) {
             response.put("status", "success");
             response.put("message", "로그인 상태입니다.");
             response.put("username", username);
+            response.put("student_Id", student_Id);
             return ResponseEntity.ok(response);
         } else {
             response.put("status", "fail");
