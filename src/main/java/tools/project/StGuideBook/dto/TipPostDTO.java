@@ -22,11 +22,15 @@ public class TipPostDTO {
 
     private int likeCount;
 
-    public TipPostDTO(String subject, String content, LocalDateTime createDate, int likeCount) {
+    private Integer student_Id;
+
+    public TipPostDTO(String subject, String content, LocalDateTime createDate,
+                      int likeCount, Integer student_Id) {
         this.subject = subject;
         this.content = content;
         this.createDate = createDate;
         this.likeCount = likeCount;
+        this.student_Id = student_Id;
     }
 
     public TipPostDTO() {}

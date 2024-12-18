@@ -34,12 +34,14 @@ public class TipPostService {
     }
 
     public void create(String subject, String content, SiteUser user) {
+
         TipPost tipPost = new TipPost(subject, content, LocalDateTime.now(), user);
         this.tipPostRepository.save(tipPost);
     }
 
     public TipPostDTO convertToDto(TipPost tipPost) {
-        return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(), tipPost.getLikeCount());
+        return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(),
+                tipPost.getLikeCount(), tipPost.getAuthor().getStudent_Id());
     }
 
     public TipPost updatePost(Integer id, TipPostDTO tipPostDTO, SiteUser user, LocalDateTime updateDate) {
