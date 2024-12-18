@@ -6,7 +6,6 @@ import tools.project.StGuideBook.UserRole.UserRole;
 import tools.project.StGuideBook.domain.Dorm;
 import tools.project.StGuideBook.domain.DormReview;
 import tools.project.StGuideBook.domain.SiteUser;
-import tools.project.StGuideBook.dto.DormDTO;
 import tools.project.StGuideBook.dto.DormReviewDTO;
 import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.exception.UnauthorizedException;

@@ -43,13 +43,13 @@ public class DormReviewController {
         }
     }
 
-    @GetMapping("/review_list") // 로그인 없이 리뷰 조회 가능
+    @GetMapping("/review_list")
     public ResponseEntity<List<DormReviewDTO>> getDormReview(@RequestParam(name = "dormId") Long dormId) {
-
         try {
             List<DormReview> dormReviews = dormReviewService.getReviewsByDorm(dormId);
+
             if (dormReviews.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 리뷰가 없는 경우
             }
 
             List<DormReviewDTO> responseDto = dormReviews.stream()
@@ -57,6 +57,8 @@ public class DormReviewController {
                     .toList();
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // 기숙사가 없는 경우
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

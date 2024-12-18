@@ -14,7 +14,7 @@ public class DormReview {
     private Long reviewId;
 
     @ManyToOne
-    @JoinColumn(name = "dorm_id")
+    @JoinColumn(name = "dorm_id", nullable = false)
     private Dorm dorm;
 
     @Column(nullable = false)
