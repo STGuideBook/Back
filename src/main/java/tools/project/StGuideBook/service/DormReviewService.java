@@ -6,6 +6,8 @@ import tools.project.StGuideBook.UserRole.UserRole;
 import tools.project.StGuideBook.domain.Dorm;
 import tools.project.StGuideBook.domain.DormReview;
 import tools.project.StGuideBook.domain.SiteUser;
+import tools.project.StGuideBook.dto.DormDTO;
+import tools.project.StGuideBook.dto.DormReviewDTO;
 import tools.project.StGuideBook.exception.DataNotFoundException;
 import tools.project.StGuideBook.exception.UnauthorizedException;
 import tools.project.StGuideBook.repository.DormRepository;
@@ -34,6 +36,22 @@ public class DormReviewService {
         DormReview dormReview = new DormReview(dorm, username, LocalDateTime.now(), comment);
 
         return dormReviewRepository.save(dormReview);
+    }
+
+    public DormReviewDTO convertToDTO(DormReview dormReview) {
+        DormDTO dormDTO = new DormDTO(
+                dormReview.getDorm().getDormId(),
+                dormReview.getDorm().getDormname()
+        );
+
+        return new DormReviewDTO(
+                dormReview.getReviewId(),
+                dormDTO,
+                dormReview.getSiteUser().getUsername(),
+                dormReview.getComment(),
+                dormReview.getCreateDate().toString(),
+                dormReview.getSiteUser().getStudent_Id()
+        );
     }
 
     public List<DormReview> getReviewsByDorm(Long dormId) {

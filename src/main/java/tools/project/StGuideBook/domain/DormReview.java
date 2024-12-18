@@ -23,6 +23,9 @@ public class DormReview {
     @Column(nullable = false)
     private String comment;
 
+    @ManyToOne
+    private SiteUser siteUser;
+
     private LocalDateTime createDate;
 
     public DormReview(Dorm dorm, String username, LocalDateTime createDate,String comment) {

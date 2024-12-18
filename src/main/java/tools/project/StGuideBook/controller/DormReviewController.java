@@ -29,12 +29,13 @@ public class DormReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/add_review/{dormId}") // 로그인 해야 리뷰 작성 가능
-    public ResponseEntity<DormReview> addDormReview(@PathVariable("dormId") Long dormId,
+    public ResponseEntity<DormReviewDTO> addDormReview(@PathVariable("dormId") Long dormId,
                                                     @RequestParam(name = "username") String username,
                                                     @RequestBody DormReviewDTO dormReviewDTO) {
         try {
             DormReview newReview = dormReviewService.addDormReview(dormId, username, dormReviewDTO.getComment());
-            return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+            DormReviewDTO responseDto = dormReviewService.convertToDTO(newReview);
+            return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -43,14 +44,19 @@ public class DormReviewController {
     }
 
     @GetMapping("/review_list") // 로그인 없이 리뷰 조회 가능
-    public ResponseEntity<List<DormReview>> getDormReview(@RequestParam(name = "dormId") Long dormId) {
+    public ResponseEntity<List<DormReviewDTO>> getDormReview(@RequestParam(name = "dormId") Long dormId) {
 
         try {
             List<DormReview> dormReviews = dormReviewService.getReviewsByDorm(dormId);
             if (dormReviews.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(dormReviews, HttpStatus.OK);
+
+            List<DormReviewDTO> responseDto = dormReviews.stream()
+                    .map(dormReviewService::convertToDTO)
+                    .toList();
+
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
