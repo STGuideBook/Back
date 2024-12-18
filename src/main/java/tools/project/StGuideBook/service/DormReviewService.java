@@ -39,19 +39,7 @@ public class DormReviewService {
     }
 
     public DormReviewDTO convertToDTO(DormReview dormReview) {
-        DormDTO dormDTO = new DormDTO(
-                dormReview.getDorm().getDormId(),
-                dormReview.getDorm().getDormname()
-        );
-
-        return new DormReviewDTO(
-                dormReview.getReviewId(),
-                dormDTO,
-                dormReview.getSiteUser().getUsername(),
-                dormReview.getComment(),
-                dormReview.getCreateDate().toString(),
-                dormReview.getSiteUser().getStudent_Id()
-        );
+        return DormReviewDTO.fromEntity(dormReview);
     }
 
     public List<DormReview> getReviewsByDorm(Long dormId) {

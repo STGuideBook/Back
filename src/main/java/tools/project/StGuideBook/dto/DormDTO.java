@@ -8,4 +8,9 @@ import lombok.RequiredArgsConstructor;
 public class DormDTO {
     private final Long dormId;
     private final String dormname;
+
+    public DormDTO(Long dormId, String dormname) {
+        this.dormId = dormId;
+        this.dormname = dormname;
+    }
 }
