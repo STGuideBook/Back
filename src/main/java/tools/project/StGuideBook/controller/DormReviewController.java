@@ -28,12 +28,11 @@ public class DormReviewController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/add_review/{dormId}") // 로그인 해야 리뷰 작성 가능
+    @PostMapping("/add_review/{dormId}")
     public ResponseEntity<DormReviewDTO> addDormReview(@PathVariable("dormId") Long dormId,
-                                                    @RequestParam(name = "username") String username,
-                                                    @RequestBody DormReviewDTO dormReviewDTO) {
+                                                       @RequestBody DormReviewDTO dormReviewDTO) {
         try {
-            DormReview newReview = dormReviewService.addDormReview(dormId, username, dormReviewDTO.getComment());
+            DormReview newReview = dormReviewService.addDormReview(dormId, dormReviewDTO.getUsername(), dormReviewDTO.getComment());
             DormReviewDTO responseDto = dormReviewService.convertToDTO(newReview);
             return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
