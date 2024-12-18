@@ -40,9 +40,9 @@ public class UserService {
         return siteUser.orElseThrow(() -> new DataNotFoundException("User not found"));
     }
 
-//    public Integer getStudentId(String username) {
-//        return userRepository.findStudent_IdByUsername(username);
-//    }
+    public Integer getStudentId(String username) {
+        return userRepository.findStudent_IdByUsername(username);
+    }
 
     public boolean authenticate(String username, String password) {
         SiteUser user = this.getUser(username);
