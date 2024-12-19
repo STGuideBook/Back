@@ -41,7 +41,7 @@ public class TipPostService {
 
     public TipPostDTO convertToDto(TipPost tipPost) {
         return new TipPostDTO(tipPost.getSubject(), tipPost.getContent(), tipPost.getCreateDate(),
-                tipPost.getLikeCount(), tipPost.getAuthor().getStudent_Id());
+                tipPost.getLikeCount(), tipPost.getAuthor().getUsername(), tipPost.getAuthor().getStudent_Id());
     }
 
     public TipPost updatePost(Integer id, TipPostDTO tipPostDTO, SiteUser user, LocalDateTime updateDate) {
