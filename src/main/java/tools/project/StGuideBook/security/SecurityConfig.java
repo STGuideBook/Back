@@ -31,13 +31,14 @@ public class SecurityConfig {
 //        http
         http.cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/main").permitAll()
-                        .requestMatchers("/user/login", "/user/signup", "/user/check-username", "/user/status").permitAll()
-                        .requestMatchers("/tip_board/list/**").permitAll()
-                        .requestMatchers("/dorm_reviews/review_list/**").permitAll()
-                        .requestMatchers("restaurant_review/review_list/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+//                        .requestMatchers("/main").permitAll()
+//                        .requestMatchers("/user/login", "/user/signup", "/user/check-username", "/user/status").permitAll()
+//                        .requestMatchers("/tip_board/list/**").permitAll()
+//                        .requestMatchers("/dorm_reviews/review_list/**").permitAll()
+//                        .requestMatchers("restaurant_review/review_list/**").permitAll()
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .anyRequest().authenticated())
+                        .requestMatchers("/**").permitAll())
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults())
 
